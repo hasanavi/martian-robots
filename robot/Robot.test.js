@@ -42,4 +42,9 @@ describe("Robot", () => {
 			"Invalid instruction: A"
 		);
 	});
+
+	test("executes instructions correctly", () => {
+		const result = robot.executeInstructions("RFRFRFRF");
+		expect(result).toEqual({ x: 1, y: 1, orientation: "E", lost: false });
+	});
 });
