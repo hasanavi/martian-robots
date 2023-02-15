@@ -18,4 +18,28 @@ describe("Robot", () => {
 		robot.turnRight();
 		expect(robot.orientation).toBe("S");
 	});
+
+	test("can move forward", () => {
+		robot.move();
+		expect(robot.pos).toEqual({ x: 2, y: 1 });
+	});
+
+	test("marks scented position when lost", () => {
+		robot.executeInstructions("FFFFF");
+		expect(mars.isScented(robot.pos)).toBe(true);
+		expect(robot.lost).toBe(true);
+	});
+
+	test("does not move when about to fall off and there is no scent", () => {
+		robot.pos = { x: 5, y: 3 };
+		robot.orientation = "E";
+		robot.move();
+		expect(robot.pos).toEqual({ x: 5, y: 3 });
+	});
+
+	test("throws error on invalid instruction", () => {
+		expect(() => robot.executeInstruction("A")).toThrow(
+			"Invalid instruction: A"
+		);
+	});
 });
